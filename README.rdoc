@@ -1,7 +1,9 @@
-== README
+A simple app written in Rails and AngularJS that takes an input and returns it with the following modifications:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Words with a length that is odd are reversed
+* Words with an even length are echoed
+* A well-formed url with prefix http:// or https:// is replaced with the prefix removed
+* Two floating point numbers separated by comma enclosed by a pair of brackets are assumed to be geolocation coordinate (latitude, longitude). They will be appended with the name of location thru Google Map API lookup.
 
 Things you may want to cover:
 
@@ -15,11 +17,10 @@ Things you may want to cover:
 
 * Database initialization
 
-* Services (job queues, cache servers, search engines, etc.)
-
 * Deployment instructions
 
 * ...
+
 
 
 assumes that words within the input contain spaces between each word, and that there are no ellipses included within the text.

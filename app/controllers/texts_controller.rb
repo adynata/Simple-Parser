@@ -1,15 +1,12 @@
 class TextsController < ApplicationController
-  before_action :set_text, only: [:show, :edit, :update, :destroy]
+  before_action :set_text, only: [:show, :edit]
 
-  # GET /texts
-  # GET /texts.json
   def index
-    @texts = Text.all
+    render json: Text.all
   end
 
-  # GET /texts/1
-  # GET /texts/1.json
   def show
+    render json: Text.find(params[:id])
   end
 
   # GET /texts/new
@@ -25,39 +22,11 @@ class TextsController < ApplicationController
   # POST /texts.json
   def create
     @text = Text.new(text_params)
-
-    respond_to do |format|
-      if @text.save
-        format.html { redirect_to @text, notice: 'Text was successfully created.' }
-        format.json { render :show, status: :created, location: @text }
-      else
-        format.html { render :new }
-        format.json { render json: @text.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /texts/1
-  # PATCH/PUT /texts/1.json
-  def update
-    respond_to do |format|
-      if @text.update(text_params)
-        format.html { redirect_to @text, notice: 'Text was successfully updated.' }
-        format.json { render :show, status: :ok, location: @text }
-      else
-        format.html { render :edit }
-        format.json { render json: @text.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /texts/1
-  # DELETE /texts/1.json
-  def destroy
-    @text.destroy
-    respond_to do |format|
-      format.html { redirect_to texts_url, notice: 'Text was successfully destroyed.' }
-      format.json { head :no_content }
+    if @text.save!
+      render json: @text
+    else
+      flash.now[:errors] = @text.errors.full_messages
+      render json: @text
     end
   end
 
@@ -69,6 +38,6 @@ class TextsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def text_params
-      params.fetch(:text, {})
+      params.require(:text).permit(:post, :id)
     end
 end

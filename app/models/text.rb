@@ -41,40 +41,27 @@ class Text < ActiveRecord::Base
         brackets_open = true
         length += 1
         i += 1
-        next
-      end
-
-      if el == "]"
+      elsif el == "]"
         brackets_open = false
-        length += 1
-        items_arr << chars.shift(length).join("")
+        items_arr << chars.shift(length + 1).join("")
         length, i = 0, 0
         next
-      end
-
-      if brackets_open && el != "]"
+      elsif brackets_open && el != "]"
         length += 1
         i += 1
-        next
-      end
-
-      # checks rest of input and filters out items from spaces, while maintaining order
-      if brackets_open == false && el == " "
+      elsif brackets_open == false && el == " "
+        # filters white space as ordered elements with a len of 1
         items_arr << chars.shift(1).join("")
+        length, i = 0, 0
         next
-      end
-
-      if brackets_open == false && el != " "
-        if length+1 == chars.length || chars[i+1] == " "
-          length += 1
-          items_arr << chars.shift(length).join("")
+      elsif brackets_open == false && el != " "
+        if length+1 == chars.length || chars[i+1] == " " || chars[i+1] == "["
+          items_arr << chars.shift(length + 1).join("")
           length, i = 0, 0
           next
-        else
-          length += 1
-          i += 1
-          next
         end
+        length += 1
+        i += 1
       end
     end
     items_arr
@@ -83,29 +70,27 @@ class Text < ActiveRecord::Base
   def transform_text(item)
     if item[0] == "["
       return append_address(item)
-    elsif is_URL?(item)
+    elsif item_is_URL?(item)
       return strip_URL(item)
     elsif item.length == 1
       return item
     elsif item_is_even?(item)
       return item
     else
-      return reverse_with_punctuation_check(item)
+      return reverse(item)
     end
   end
 
   def append_address(item)
     latlon = item[1..-2].gsub(/\s+/, "")
     response = HTTParty.get(GOOGLE_MAPS_PREFIX + latlon +'&key=' + API_KEY)
-    # puts response.code, response.message, response.headers.inspect
     if response.code == 200
      return item + "(" + JSON.parse(response.body)["results"][0]["formatted_address"] + ")"
-    else
-      return "()"
     end
+    item
   end
 
-  def is_URL?(string)
+  def item_is_URL?(string)
     URL_PREFIXES.any? do |pref|
       len = pref.length
       string[0...len] == pref
@@ -120,7 +105,7 @@ class Text < ActiveRecord::Base
     end
   end
 
-  def reverse_with_punctuation_check(item)
+  def reverse(item)
     if !("a".."z").to_a.include?(item.last)
       return item[0..-2].reverse + item[-1]
     else

@@ -3,8 +3,9 @@
 <head>
   <title>Grio</title>
   <%= csrf_meta_tags %>
+  <%= javascript_include_tag "application"%>
 </head>
-<body>
+<body data-ng-app="grioParser" ng-cloak>
 
 <%= yield %>
 
