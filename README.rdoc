@@ -12,7 +12,7 @@ This app is written in:
 * Postgres
 * Angular 1.5.7
 
-Currently the parser assumes that the input does not contain ellipses or and that there are no ellipses included within the text.
+Currently the parser assumes that the input does not contain ellipses or other consecutive sequences of punctuation within the text.
 
 ##To run locally, make sure you have Postgres running, and then from the CL:
 ```

@@ -49,12 +49,12 @@ class Text < ActiveRecord::Base
       elsif brackets_open && el != "]"
         length += 1
         i += 1
-      elsif brackets_open == false && el == " "
+      elsif !brackets_open && el == " "
         # filters white space as ordered elements with a len of 1
         items_arr << chars.shift(1).join("")
         length, i = 0, 0
         next
-      elsif brackets_open == false && el != " "
+      elsif !brackets_open && el != " "
         if length+1 == chars.length || chars[i+1] == " " || chars[i+1] == "["
           items_arr << chars.shift(length + 1).join("")
           length, i = 0, 0
