@@ -5,25 +5,19 @@ A simple app written in Rails and AngularJS that takes an input and returns it w
 * A well-formed url with prefix http:// or https:// is replaced with the prefix removed
 * Two floating point numbers separated by comma enclosed by a pair of brackets are assumed to be geolocation coordinate (latitude, longitude). They will be appended with the name of location thru Google Map API lookup.
 
-Things you may want to cover:
+This app is written in:
 
-* Ruby version
+* Ruby 2.1.2p95
+* Rails 4.2.3
+* Postgres
+* Angular 1.5.7
 
-* System dependencies
+Currently the parser assumes that the input does not contain ellipses or and that there are no ellipses included within the text.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* Deployment instructions
-
-* ...
-
-
-
-assumes that words within the input contain spaces between each word, and that there are no ellipses included within the text.
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+##To run locally, make sure you have Postgres running, and then from the CL:
+```
+git clone https://github.com/adynata/Simple-Parser.git
+bundle install
+rails s
+```
+Then navigate to http://localhost:3000/ to see it running.

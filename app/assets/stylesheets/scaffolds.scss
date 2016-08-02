@@ -8,7 +8,7 @@ body {
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-size: 33px;
   line-height: 18px;
 }
 
@@ -70,4 +70,18 @@ div {
     font-size: 12px;
     list-style: square;
   }
+}
+
+ul {
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.inputs-list li {
+  background-color: red;
+  padding: 5px;
+  font-size: 0.9em;
+  border-bottom: .3px solid lightgrey;
 }
