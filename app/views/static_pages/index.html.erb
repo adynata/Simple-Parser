@@ -2,8 +2,8 @@
   <h1 class="app-title">{{::title}}</h1>
   <form ng-submit="submitInput()">
     <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-    <input placeholder="input goes here" ng-change="updateInput(input)" ng-model="input"><br/>
     <input type="submit" class="button" value="Submit">
+    <input placeholder="&nbsp;&nbsp;input goes here" ng-change="updateInput(input)" ng-model="input"><br/>
   </form>
   <div class="inputs-list">
     <ul>
